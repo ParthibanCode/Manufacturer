@@ -1,19 +1,37 @@
 package com.example.manufacture.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Component {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer component_id;
+	@NotBlank
 	private String name;
+	@NotNull
 	private String description;
-	private Product products;
-	private Supplier suppliers;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+	@JoinTable(name = "Components_in_Product", joinColumns = {
+			@JoinColumn(name = "component_ID") }, inverseJoinColumns = { @JoinColumn(name = "prd_ID") })
+	private Set<Product> products = new HashSet<>();
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+	@JoinTable(name = "Suppliers_of_Components", joinColumns = {
+			@JoinColumn(name = "component_ID") }, inverseJoinColumns = { @JoinColumn(name = "supplier_ID") })
+	private Set<Supplier> suppliers = new HashSet<>();
 
 	public String getName() {
 		return name;
@@ -31,14 +49,6 @@ public class Component {
 		this.description = description;
 	}
 
-	public Product getProducts() {
-		return products;
-	}
-
-	public void setProducts(Product products) {
-		this.products = products;
-	}
-
 	public Integer getComponent_id() {
 		return component_id;
 	}
@@ -47,11 +57,19 @@ public class Component {
 		this.component_id = component_id;
 	}
 
-	public Supplier getSuppliers() {
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(HashSet<Product> products) {
+		this.products = products;
+	}
+
+	public Set<Supplier> getSuppliers() {
 		return suppliers;
 	}
 
-	public void setSuppliers(Supplier suppliers) {
+	public void setSuppliers(HashSet<Supplier> suppliers) {
 		this.suppliers = suppliers;
 	}
 
