@@ -17,7 +17,7 @@ public class Supplier {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer supplier_id;
 	private String name;
-	@ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST})
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private Set<Component> components = new HashSet<>();
 
 	public String getName() {

@@ -16,11 +16,6 @@ public class ProductService {
 	@Autowired
 	ComponentRepository componentRepository;
 
-	public void addProduct(Product product, Component component) {
-		product.getComponents().add(component);
-		productRepository.save(product);
-	}
-
 	public void addProduct(Product product, Integer compId) {
 		Component c1 = componentRepository.findById(compId).get();
 		product.getComponents().add(c1);

@@ -22,7 +22,7 @@ public class Product {
 	private String name;
 	@NotNull
 	private long quantity;
-	@ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST})
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private Set<Component> components = new HashSet<>();
 
 	public String getName() {

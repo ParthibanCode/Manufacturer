@@ -24,13 +24,13 @@ public class Component {
 	private String name;
 	@NotNull
 	private String description;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "Components_in_Product", joinColumns = {
-			@JoinColumn(name = "component_ID") }, inverseJoinColumns = { @JoinColumn(name = "prd_ID") })
+			@JoinColumn(name = "component_ID",referencedColumnName = "component_id") }, inverseJoinColumns = { @JoinColumn(name = "prd_ID", referencedColumnName = "prd_id") })
 	private Set<Product> products = new HashSet<>();
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "Suppliers_of_Components", joinColumns = {
-			@JoinColumn(name = "component_ID") }, inverseJoinColumns = { @JoinColumn(name = "supplier_ID") })
+			@JoinColumn(name = "component_ID",referencedColumnName = "component_id") }, inverseJoinColumns = { @JoinColumn(name = "supplier_ID",referencedColumnName = "supplier_id") })
 	private Set<Supplier> suppliers = new HashSet<>();
 
 	public String getName() {
